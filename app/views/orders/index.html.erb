@@ -1,0 +1,91 @@
+<div id="orders-statistics" class="container py-4">
+  <h1 class="mb-4"><%= t('.index') %></h1>
+
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= t('orders.statistics.total_orders') %></h5>
+          <p id="total-orders" class="card-text display-6">-</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= t('orders.statistics.active_orders') %></h5>
+          <p id="active-orders" class="card-text display-6 text-success">-</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= t('orders.statistics.cancelled_orders') %></h5>
+          <p id="cancelled-orders" class="card-text display-6 text-danger">-</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title"><%= t('orders.statistics.monthly_orders') %></h5>
+      <div style="height: 300px;">
+        <canvas id="monthlyOrdersChart"
+                data-chart-label="<%= t('orders.statistics.monthly_chart.label') %>">
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <%= link_to t('.new_order'), new_order_path, class: 'btn btn-primary mb-4' %>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th><%= Order.human_attribute_name(:order_date) %></th>
+          <th><%= t('.total_amount') %></th>
+          <th><%= t('.order_status') %></th>
+          <th><%= t('.shipment_status') %></th>
+          <th><%= t('.actions') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= l order.created_at, format: :short %></td>
+            <td>
+              <%= number_to_currency(
+                order.order_items.sum { |item| item.quantity * item.product_sales_info.price },
+                unit: '¥',
+                precision: 0
+              ) %>
+            </td>
+            <td>
+              <% if order.order_cancel.present? %>
+                <span class="badge bg-danger"><%= t('.cancelled') %></span>
+              <% else %>
+                <span class="badge bg-success"><%= t('.completed') %></span>
+              <% end %>
+            </td>
+            <td>
+              <% if order.shipment %>
+                <span class="badge bg-info">
+                  <%= t("shipment.status.#{order.shipment.status}") %>
+                </span>
+              <% end %>
+            </td>
+            <td>
+              <%= render 'action_links', order: order %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= javascript_import_module_tag "modules/orders_statistics_chart" %>

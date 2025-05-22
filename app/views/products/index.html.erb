@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><%= t("products.index") %></h2>
+    <%= link_to cart_path, class: "btn btn-outline-primary" do %>
+      <i class="bi bi-cart"></i>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= link_to product.name, product_path(product),
+                  class: "text-decoration-none" %>
+            </h5>
+            <p class="card-text">
+              <span class="badge bg-secondary">
+                <%= t("activerecord.enums.product.category.#{product.category}") %>
+              </span>
+            </p>
+            <% if product.product_sales_info %>
+              <p class="card-text">
+                <%= Product.human_attribute_name(:price) %>:
+                <%= number_to_currency(product.product_sales_info.price) %>
+              </p>
+              <%= form_with url: cart_items_path, class: "d-flex gap-2" do |f| %>
+                <%= f.hidden_field :product_id, value: product.id %>
+                <%= f.number_field :quantity, value: 1, min: 1,
+                    class: "form-control form-control-sm w-25" %>
+                <%= f.submit t('carts.add_to_cart'),
+                    class: "btn btn-sm btn-primary" %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <nav>
+      <%= pagination_links(@page, @total_pages, :products_path) %>
+    </nav>
+  </div>
+</div>

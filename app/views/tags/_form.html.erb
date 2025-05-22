@@ -1,0 +1,15 @@
+<%= form_with(model: tag, local: true, data: { turbo: false }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+    <% if form.object.errors[:name].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:name).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit t("helpers.submit.tag.#{tag.new_record? ? 'create' : 'update'}"), class: 'btn btn-primary' %>
+  </div>
+<% end %>

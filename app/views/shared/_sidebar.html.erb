@@ -1,0 +1,111 @@
+<nav class="sidebar border-end flex-shrink-0 bg-white shadow-sm">
+  <div class="accordion accordion-flush" id="sidebarAccordion">
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#adminMenu" aria-expanded="true" aria-controls="adminMenu">
+          <i class="bi bi-people-fill me-2"></i>Users & Permissions
+        </button>
+      </h2>
+      <div id="adminMenu" class="accordion-collapse collapse show" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body p-0">
+          <%= link_to users_path, class: "sidebar-link #{current_page?(users_path) ? 'active' : ''}" do %>
+            <i class="bi bi-people-fill me-2"></i>Users
+          <% end %>
+
+          <%= link_to permissions_path, class: "sidebar-link #{current_page?(permissions_path) ? 'active' : ''}" do %>
+            <i class="bi bi-shield-fill-check me-2"></i>Permissions
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#contentsMenu" aria-expanded="true" aria-controls="contentsMenu">
+          <i class="bi bi-file-text me-2"></i>Posts & Tags
+        </button>
+      </h2>
+      <div id="contentsMenu" class="accordion-collapse collapse show" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body p-0">
+          <%= link_to user_posts_path(current_user), class: "sidebar-link #{current_page?(user_posts_path(current_user)) ? 'active' : ''}" do %>
+            <i class="bi bi-file-text me-2"></i>My Posts
+          <% end %>
+
+          <%= link_to tags_path, class: "sidebar-link #{current_page?(tags_path) ? 'active' : ''}" do %>
+            <i class="bi bi-tags-fill me-2"></i>Tags
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#productMenu" aria-expanded="true" aria-controls="productMenu">
+          <i class="bi bi-box-seam me-2"></i>Products
+        </button>
+      </h2>
+      <div id="productMenu" class="accordion-collapse collapse show" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body p-0">
+          <%= link_to products_path, class: "sidebar-link #{current_page?(products_path) ? 'active' : ''}" do %>
+            <i class="bi bi-box-seam me-2"></i>Products
+          <% end %>
+
+          <%= link_to product_sales_infos_path, class: "sidebar-link #{current_page?(product_sales_infos_path) ? 'active' : ''}" do %>
+            <i class="bi bi-graph-up me-2"></i>Product Sales Infos
+          <% end %>
+
+          <%= link_to orders_path, class: "sidebar-link #{current_page?(orders_path) ? 'active' : ''}" do %>
+            <i class="bi bi-bag-fill me-2"></i>Orders
+          <% end %>
+
+          <%= link_to purchase_histories_path,
+              class: "sidebar-link #{current_page?(purchase_histories_path) ? 'active' : ''}" do %>
+            <i class="bi bi-clock-history me-2"></i>Purchase Histories
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#eventMenu" aria-expanded="true" aria-controls="eventMenu">
+          <i class="bi bi-calendar-event-fill me-2"></i>Events
+        </button>
+      </h2>
+      <div id="eventMenu" class="accordion-collapse collapse show" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body p-0">
+          <%= link_to events_path, class: "sidebar-link #{current_page?(events_path) ? 'active' : ''}" do %>
+            <i class="bi bi-calendar-event-fill me-2"></i>Events
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#monitoringMenu" aria-expanded="true" aria-controls="monitoringMenu">
+          <i class="bi bi-card-list me-2"></i>Summary
+        </button>
+      </h2>
+      <div id="monitoringMenu" class="accordion-collapse collapse show" data-bs-parent="#sidebarAccordion">
+        <div class="accordion-body p-0">
+          <%= link_to request_logs_path,
+            class: "sidebar-link #{current_page?(request_logs_path) ? 'active' : ''}" do %>
+            <i class="bi bi-file-text-fill me-2"></i>Summary of Request
+          <% end %>
+
+          <%= link_to activerecord_logs_path,
+              class: "sidebar-link #{current_page?(activerecord_logs_path) ? 'active' : ''}" do %>
+            <i class="bi bi-file-text-fill me-2"></i>Summary of ActiveRecord
+          <% end %>
+
+          <%= link_to code_searches_path,
+              class: "sidebar-link #{current_page?(code_searches_path) ? 'active' : ''}" do %>
+            <i class="bi bi-search me-2"></i>Code Search
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

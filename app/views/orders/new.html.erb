@@ -1,0 +1,84 @@
+<div class="container py-4">
+  <h1 class="mb-4"><%= t('.title') %></h1>
+
+  <%= form_with(model: @order, local: true, id: 'order-form') do |form| %>
+    <% if @order.errors.any? %>
+      <div class="alert alert-danger">
+        <h4><%= t('errors.template.header', count: @order.errors.count) %></h4>
+        <ul class="mb-0">
+          <% @order.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :order_date, class: 'form-label' %>
+      <%= form.datetime_local_field :order_date,
+          value: Time.current.strftime("%Y-%m-%dT%H:%M"),
+          class: 'form-control' %>
+    </div>
+
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th><%= OrderItem.human_attribute_name(:product_name) %></th>
+            <th><%= OrderItem.human_attribute_name(:quantity) %></th>
+          </tr>
+        </thead>
+        <tbody id="order-items">
+          <tr class="order-item">
+            <td>
+              <% product_select_id = "product_select_0" %>
+              <%= label_tag product_select_id,
+                  OrderItem.human_attribute_name(:product_name),
+                  class: 'visually-hidden' %>
+                    <%= select_tag "order[product_sales_info_ids][0]",
+                    options_from_collection_for_select(
+                      @available_products,
+                      :id,
+                      :display_text
+                    ),
+                    {
+                      include_blank: t('.select_product'),
+                      class: 'form-select product-select',
+                      id: product_select_id,
+                      data: {
+                        inventory_ids: @available_products.map { |p| p.inventory.id }.to_json
+                      }
+                    } %>
+            </td>
+            <td>
+              <% quantity_input_id = "quantity_input_0" %>
+              <label for="<%= quantity_input_id %>" class="visually-hidden">
+                <%= OrderItem.human_attribute_name(:quantity) %>
+              </label>
+              <%= number_field_tag "order[quantities][0]",
+                  1,
+                  min: 1,
+                  class: 'form-control quantity-input',
+                  id: quantity_input_id %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mb-3">
+      <%= form.submit t('.confirm_order'),
+                      class: 'btn btn-primary',
+                      id: 'confirm-order-btn',
+                      data: {
+                        original_text: t('.confirm_order'),
+                        processing_text: t('.processing')
+                      } %>
+    </div>
+  <% end %>
+
+  <%= link_to t('.back_to_order_list'), orders_path, class: 'btn btn-outline-secondary' %>
+</div>
+
+<%= javascript_import_module_tag "modules/orders" %>
+<%= javascript_import_module_tag "modules/order_submission_handler" %>

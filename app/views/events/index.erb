@@ -1,0 +1,82 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><%= t('events.index') %></h1>
+    <%= link_to t('events.new_event'), new_event_path, class: 'btn btn-primary' %>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <%= form_with(url: events_path, method: :get, local: true, class: 'row g-3') do |form| %>
+        <div class="col-md-6">
+          <%= form.label :title, Event.human_attribute_name(:title), class: 'form-label' %>
+          <%= form.text_field :title, value: params[:title], class: 'form-control' %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :location, Event.human_attribute_name(:location), class: 'form-label' %>
+          <%= form.text_field :location, value: params[:location], class: 'form-control' %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :start_date, t('events.search.start_date'), class: 'form-label' %>
+          <%= form.date_field :start_date, value: params[:start_date], class: 'form-control' %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :end_date, t('events.search.end_date'), class: 'form-label' %>
+          <%= form.date_field :end_date, value: params[:end_date], class: 'form-control' %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :user_id, Event.human_attribute_name(:user), class: 'form-label' %>
+          <%= form.collection_select :user_id,
+              User.all,
+              :id,
+              :name,
+              { include_blank: t('events.search.select_user') },
+              class: 'form-select' %>
+        </div>
+
+        <div class="col-12">
+          <%= form.submit t('events.search.submit'), class: 'btn btn-secondary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @events.exists? %>
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th><%= Event.human_attribute_name(:title) %></th>
+              <th><%= Event.human_attribute_name(:start_at) %></th>
+              <th><%= Event.human_attribute_name(:end_at) %></th>
+              <th><%= Event.human_attribute_name(:location) %></th>
+              <th><%= Event.human_attribute_name(:user) %></th>
+              <th><%= t('events.actions') %></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @events.each do |event| %>
+              <tr>
+                <td><%= event.title %></td>
+                <td><%= l event.start_at, format: :short %></td>
+                <td><%= l event.end_at, format: :short %></td>
+                <td><%= event.location %></td>
+                <td><%= event.user.name %></td>
+                <td><%= render 'action_links', event: event %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <%= t('events.no_events_found') %>
+    </div>
+  <% end %>
+</div>

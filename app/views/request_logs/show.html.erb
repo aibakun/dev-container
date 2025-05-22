@@ -1,0 +1,128 @@
+<div class="container py-5">
+  <!-- ActiveRecord Logs Section -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h1 class="display-4 mb-4">ActiveRecordログの分析</h1>
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h2 class="h4 mb-0">生成されるActiveRecordログの例</h2>
+        </div>
+        <div class="card-body">
+          <pre class="bg-light p-3 mb-0"><code>User Load (0.2ms) SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2 [["id", 2], ["LIMIT", 1]]
+User Exists? (3.3ms) SELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2 [["email", ""], ["LIMIT", 1]]
+User Update (2.3ms) UPDATE "users" SET "name" = $1, "password" = $2, "updated_at" = $3 WHERE "users"."id" = $4 [["name", "test user"], ["password", "[FILTERED]"], ["updated_at", "2024-05-07 13:12:52.681111"], ["id", 1]]
+User Destroy (3.0ms) DELETE FROM "users" WHERE "users"."id" = $1 [0m  [["id", 4]]
+ActiveRecord::RecordNotFound (Couldn't find User with 'id'=new):</code></pre>
+        </div>
+      </div>
+
+      <h2 class="h3 mb-4">ActiveRecordログの種類</h2>
+
+      <div class="accordion mb-4" id="activeRecordTypes">
+        <!-- Load -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLoad">
+              1. レコードの読み込み
+            </button>
+          </h3>
+          <div id="collapseLoad" class="accordion-collapse collapse show" data-bs-parent="#activeRecordTypes">
+            <div class="accordion-body">
+              <p class="mb-2"><strong>形式:</strong></p>
+              <pre class="bg-light p-3"><code>Model Load (時間ms) SQLクエリ  [["パラメータ名", 値], ...]</code></pre>
+              <p class="mb-2"><strong>例:</strong></p>
+              <pre class="bg-light p-3 mb-0"><code>User Load (0.2ms) SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2 [["id", 2], ["LIMIT", 1]]</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exists -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExists">
+              2. レコードの存在確認
+            </button>
+          </h3>
+          <div id="collapseExists" class="accordion-collapse collapse" data-bs-parent="#activeRecordTypes">
+            <div class="accordion-body">
+              <p class="mb-2"><strong>形式:</strong></p>
+              <pre class="bg-light p-3"><code>Model Exists? (時間ms) SQLクエリ  [["パラメータ名", 値], ...]</code></pre>
+              <p class="mb-2"><strong>例:</strong></p>
+              <pre class="bg-light p-3 mb-0"><code>User Exists? (3.3ms) SELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2 [["email", ""], ["LIMIT", 1]]</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Update -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUpdate">
+              3. レコードの更新
+            </button>
+          </h3>
+          <div id="collapseUpdate" class="accordion-collapse collapse" data-bs-parent="#activeRecordTypes">
+            <div class="accordion-body">
+              <p class="mb-2"><strong>形式:</strong></p>
+              <pre class="bg-light p-3"><code>Model Update (時間ms) SQLクエリ  [["パラメータ名", 値], ...]</code></pre>
+              <p class="mb-2"><strong>例:</strong></p>
+              <pre class="bg-light p-3 mb-0"><code>User Update (2.3ms) UPDATE "users" SET "name" = $1, "password" = $2, "updated_at" = $3 WHERE "users"."id" = $4 [["name", "test user"], ["password", "[FILTERED]"], ["updated_at", "2024-05-07 13:12:52.681111"], ["id", 1]]</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Destroy -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDestroy">
+              4. レコードの削除
+            </button>
+          </h3>
+          <div id="collapseDestroy" class="accordion-collapse collapse" data-bs-parent="#activeRecordTypes">
+            <div class="accordion-body">
+              <p class="mb-2"><strong>形式:</strong></p>
+              <pre class="bg-light p-3"><code>Model Destroy (時間ms) SQLクエリ  [["パラメータ名", 値], ...]</code></pre>
+              <p class="mb-2"><strong>例:</strong></p>
+              <pre class="bg-light p-3 mb-0"><code>User Destroy (3.0ms) DELETE FROM "users" WHERE "users"."id" = $1 [0m  [["id", 4]]</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div class="accordion-item">
+          <h3 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseError">
+              5. エラーメッセージ
+            </button>
+          </h3>
+          <div id="collapseError" class="accordion-collapse collapse" data-bs-parent="#activeRecordTypes">
+            <div class="accordion-body">
+              <p class="mb-2"><strong>形式:</strong></p>
+              <pre class="bg-light p-3"><code>ActiveRecord::エラー名 (エラーメッセージ)</code></pre>
+              <p class="mb-2"><strong>例:</strong></p>
+              <pre class="bg-light p-3 mb-0"><code>ActiveRecord::RecordNotFound (Couldn't find User with 'id'=new):</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="h4 mb-0">一般的なエラーメッセージの対処法</h2>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <h5 class="mb-1">ActiveRecord::RecordNotFound</h5>
+              <p class="mb-0">レコードが存在しない場合、レコードの存在を確認する。</p>
+            </li>
+            <li class="list-group-item">
+              <h5 class="mb-1">ActiveRecord::StatementInvalid</h5>
+              <p class="mb-0">テーブルのカラムが存在しない場合、カラムの存在を確認する。</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

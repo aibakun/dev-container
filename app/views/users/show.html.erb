@@ -1,0 +1,32 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="h4 mb-0"><%= @user.name %></h1>
+        </div>
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-3"><%= User.human_attribute_name(:name) %></dt>
+            <dd class="col-sm-9"><%= @user.name %></dd>
+
+            <dt class="col-sm-3"><%= User.human_attribute_name(:email) %></dt>
+            <dd class="col-sm-9"><%= @user.email %></dd>
+
+            <dt class="col-sm-3"><%= Profile.human_attribute_name(:biography) %></dt>
+            <dd class="col-sm-9"><%= @user.profile.biography %></dd>
+
+            <dt class="col-sm-3"><%= User.human_attribute_name(:occupation) %></dt>
+            <dd class="col-sm-9"><%= t("activerecord.enums.user.occupation.#{@user.occupation}") %></dd>
+          </dl>
+
+          <div class="d-flex gap-2 mt-4">
+            <%= render 'action_links', user: @user %>
+            <%= link_to t('users.back_to_list'), users_path, class: 'btn btn-outline-secondary btn-sm' %>
+            <%= link_to t('users.go_to_posts'), user_posts_path(@user), class: 'btn btn-outline-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

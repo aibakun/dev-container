@@ -1,0 +1,55 @@
+<%= form_with(model: event, local: true, data: { turbo: false }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
+    <% if form.object.errors[:title].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:title).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: 'form-label' %>
+    <%= form.text_area :description, class: 'form-control', rows: 3 %>
+    <% if form.object.errors[:description].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:description).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :start_at, class: 'form-label' %>
+    <%= form.datetime_field :start_at, class: 'form-control' %>
+    <% if form.object.errors[:start_at].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:start_at).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :end_at, class: 'form-label' %>
+    <%= form.datetime_field :end_at, class: 'form-control' %>
+    <% if form.object.errors[:end_at].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:end_at).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :location, class: 'form-label' %>
+    <%= form.text_field :location, class: 'form-control' %>
+    <% if form.object.errors[:location].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:location).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

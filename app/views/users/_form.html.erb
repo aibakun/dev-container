@@ -1,0 +1,70 @@
+<%= form_with model: @user, local: true, data: { turbo: false } do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+    <% if form.object.errors[:name].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:name).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :email, class: 'form-label' %>
+    <%= form.email_field :email, class: 'form-control' %>
+    <% if form.object.errors[:email].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:email).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :password, class: 'form-label' %>
+    <%= form.password_field :password, class: 'form-control' %>
+    <% if form.object.errors[:password].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:password).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :password_confirmation, class: 'form-label' %>
+    <%= form.password_field :password_confirmation, class: 'form-control' %>
+    <% if form.object.errors[:password_confirmation].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:password_confirmation).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= fields_for @profile do |profile_form| %>
+    <div class="mb-3">
+      <%= profile_form.label :biography, class: 'form-label' %>
+      <%= profile_form.text_area :biography, class: 'form-control', rows: 3 %>
+      <% if profile_form.object.errors[:biography].any? %>
+        <div class="invalid-feedback d-block">
+          <%= profile_form.object.errors.full_messages_for(:biography).join(', ') %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :occupation, class: 'form-label' %>
+    <%= form.select :occupation,
+        User.occupations.keys.map { |occupation| [t("activerecord.enums.user.occupation.#{occupation}"), occupation] },
+        { prompt: t("helpers.select.prompt") },
+        class: 'form-select' %>
+    <% if form.object.errors[:occupation].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:occupation).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

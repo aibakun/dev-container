@@ -1,0 +1,12 @@
+<div class="btn-group" role="group">
+  <%= link_to t('common.show'), purchase_history, class: 'btn btn-outline-info btn-sm' %>
+  <% if purchase_history.user == current_user %>
+    <%= link_to t('common.edit'), edit_purchase_history_path(purchase_history), class: 'btn btn-outline-primary btn-sm' %>
+    <%= link_to t('common.delete'), purchase_history,
+        class: 'btn btn-outline-danger btn-sm',
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: t('purchase_histories.delete_confirmation')
+        } %>
+  <% end %>
+</div>

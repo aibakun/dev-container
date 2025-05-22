@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RailsApplication</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <%= javascript_importmap_tags %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body class="min-vh-100 d-flex flex-column m-0 p-0">
+    <div class="min-vh-100 d-flex flex-column">
+      <header class="bg-primary bg-gradient text-white p-3 shadow-sm">
+        <%= render 'shared/header' %>
+      </header>
+
+      <div class="d-flex flex-grow-1 overflow-hidden">
+        <%= render 'shared/sidebar' %>
+
+        <main class="flex-grow-1 p-4 overflow-auto bg-light">
+          <%= render 'shared/flash_messages' %>
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

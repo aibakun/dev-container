@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-3"><%= Product.human_attribute_name(:name) %></dt>
+            <dd class="col-sm-9"><%= @product.name %></dd>
+
+            <dt class="col-sm-3"><%= Product.human_attribute_name(:price) %></dt>
+            <dd class="col-sm-9"><%= number_to_currency(@sales_info.price) %></dd>
+
+            <dt class="col-sm-3"><%= Product.human_attribute_name(:category) %></dt>
+            <dd class="col-sm-9">
+              <%= t("activerecord.enums.product.category.#{@product.category}") %>
+            </dd>
+          </dl>
+
+          <dt class="col-sm-3"><%= t('carts.quantity') %></dt>
+            <dd class="col-sm-9">
+              <%= form_with url: cart_items_path, class: "d-flex align-items-center gap-3" do |f| %>
+                <%= f.hidden_field :product_id, value: @product.id %>
+                <div style="width: 120px;">
+                  <%= f.number_field :quantity, value: 1, min: 1,
+                      class: "form-control" %>
+                </div>
+                <%= f.submit t('carts.add_to_cart'),
+                    class: "btn btn-primary" %>
+              <% end %>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to t('products.back_to_list'), products_path, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>

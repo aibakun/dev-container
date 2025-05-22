@@ -1,0 +1,31 @@
+<%= form_with(model: purchase_history, local: true, data: { turbo: false }, class: 'needs-validation') do |form| %>
+  <% if purchase_history.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= t('errors.template.header', count: purchase_history.errors.count) %></h4>
+      <ul class="mb-0">
+        <% purchase_history.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :price, class: 'form-label' %>
+    <%= form.text_field :price, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :purchase_date, class: 'form-label' %>
+    <%= form.datetime_field :purchase_date, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

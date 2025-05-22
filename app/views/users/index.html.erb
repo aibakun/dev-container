@@ -1,0 +1,45 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><%= t('users.index') %></h1>
+    <%= link_to t('users.create'), new_user_path, class: 'btn btn-primary' %>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th><%= User.human_attribute_name(:name) %></th>
+            <th><%= User.human_attribute_name(:email) %></th>
+            <th><%= t('users.actions') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= link_to user.name, user_path(user), class: 'text-decoration-none' %></td>
+              <td><%= user.email %></td>
+              <td><%= render 'action_links', user: user %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <nav>
+      <%= pagination_links(@page, @total_pages, :users_path) %>
+    </nav>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to t('permissions.go_to_permissions'), permissions_path, class: 'btn btn-outline-secondary me-2' %>
+    <%= link_to t('users.logout'), logout_path,
+        class: 'btn btn-outline-danger',
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: t('users.logout_confirmation')
+        } %>
+  </div>
+</div>

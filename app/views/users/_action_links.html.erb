@@ -1,0 +1,9 @@
+<div class="btn-group" role="group">
+  <%= link_to t('users.edit'), edit_user_path(user), class: 'btn btn-outline-primary btn-sm' %>
+  <%= link_to t('users.delete'), user_path(user),
+      class: 'btn btn-outline-danger btn-sm',
+      data: {
+        turbo_method: :delete,
+        turbo_confirm: t('users.delete_confirmation')
+      } %>
+</div>

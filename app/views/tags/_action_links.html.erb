@@ -1,0 +1,9 @@
+<div class="btn-group" role="group">
+  <%= link_to t('tags.edit'), edit_tag_path(tag), class: 'btn btn-outline-primary btn-sm' %>
+  <%= link_to t('tags.delete'), tag_path(tag),
+      class: 'btn btn-outline-danger btn-sm',
+      data: {
+        turbo_method: :delete,
+        turbo_confirm: t('tags.delete_confirmation')
+      } %>
+</div>

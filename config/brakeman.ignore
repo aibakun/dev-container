@@ -1,0 +1,29 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "1f4b411e189ec3f8de725148645333c095e02de80761fc2630d2961bed75b9c2",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/purchase_histories_controller.rb",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "PurchaseHistory.where(\"name LIKE '%#{params[:unsafe_name]}%'\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "PurchaseHistoriesController",
+        "method": "index"
+      },
+      "user_input": "params[:unsafe_name]",
+      "confidence": "High",
+      "cwe_id": [
+        89
+      ],
+      "note": "研修のためSQLインジェクションの学習用に意図的に実装"
+    }
+  ],
+  "updated": "2025-01-22 05:09:30 +0000",
+  "brakeman_version": "6.2.2"
+}

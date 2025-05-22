@@ -1,0 +1,103 @@
+<div class="container py-4">
+  <h1 class="mb-4"><%= t('purchase_histories.index') %></h1>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title mb-0"><%= t('purchase_histories.search.secure_form') %></h3>
+        </div>
+        <div class="card-body">
+          <%= form_with(url: purchase_histories_path, method: :get, local: true) do |form| %>
+            <div class="mb-3">
+              <%= form.label :name, PurchaseHistory.human_attribute_name(:name), class: 'form-label' %>
+              <%= form.text_field :name, value: params[:name], class: 'form-control' %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :price_range, t('purchase_histories.search.price_range'), class: 'form-label' %>
+              <div class="row">
+                <div class="col">
+                  <%= form.number_field :min_price, value: params[:min_price], class: 'form-control', placeholder: t('purchase_histories.search.min_price_placeholder') %>
+                </div>
+                <div class="col">
+                  <%= form.number_field :max_price, value: params[:max_price], class: 'form-control', placeholder: t('purchase_histories.search.max_price_placeholder') %>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <%= form.label :purchase_date, PurchaseHistory.human_attribute_name(:purchase_date), class: 'form-label' %>
+              <div class="row">
+                <div class="col">
+                  <%= form.date_field :start_date, value: params[:start_date], class: 'form-control' %>
+                </div>
+                <div class="col">
+                  <%= form.date_field :end_date, value: params[:end_date], class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <%= form.label :user_id, PurchaseHistory.human_attribute_name(:user), class: 'form-label' %>
+              <%= form.collection_select :user_id, User.all, :id, :name,
+                  { include_blank: t('purchase_histories.search.select_user') },
+                  { class: 'form-select' } %>
+            </div>
+            <%= form.submit t('purchase_histories.search.submit'), class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title mb-0"><%= t('purchase_histories.search.insecure_form') %></h3>
+        </div>
+        <div class="card-body">
+          <%= form_tag purchase_histories_path, method: :get do %>
+            <div class="mb-3">
+              <%= label_tag :unsafe_name, PurchaseHistory.human_attribute_name(:name), class: 'form-label' %>
+              <%= text_field_tag :unsafe_name, params[:unsafe_name], class: 'form-control' %>
+            </div>
+            <%= submit_tag t('purchase_histories.search.submit'), class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to t('purchase_histories.new_purchase_history'), new_purchase_history_path, class: 'btn btn-success mb-4' %>
+
+  <% if @purchase_histories.exists? %>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th><%= PurchaseHistory.human_attribute_name(:name) %></th>
+            <th><%= PurchaseHistory.human_attribute_name(:price) %></th>
+            <th><%= PurchaseHistory.human_attribute_name(:purchase_date) %></th>
+            <th><%= PurchaseHistory.human_attribute_name(:user) %></th>
+            <th><%= t('purchase_histories.actions') %></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @purchase_histories.each do |purchase_history| %>
+            <tr>
+              <td><%= purchase_history.name %></td>
+              <td><%= purchase_history.price %></td>
+              <td><%= l purchase_history.purchase_date, format: :short %></td>
+              <td><%= purchase_history.user.name %></td>
+              <td>
+                <%= render 'action_links', purchase_history: purchase_history %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <%= t('purchase_histories.no_purchase_histories_found') %>
+    </div>
+  <% end %>
+</div>

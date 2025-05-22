@@ -1,0 +1,38 @@
+<%= form_with(model: [@product, @product_sales_info], local: true, data: { turbo: false }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :price, class: 'form-label' %>
+    <%= form.number_field :price, min: 0, class: 'form-control' %>
+    <% if form.object.errors[:price].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:price).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :effective_from, class: 'form-label' %>
+    <%= form.datetime_field :effective_from, class: 'form-control' %>
+    <% if form.object.errors[:effective_from].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:effective_from).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <div class="form-check">
+      <%= form.check_box :discontinued, class: 'form-check-input' %>
+      <%= form.label :discontinued, class: 'form-check-label' %>
+    </div>
+    <% if form.object.errors[:discontinued].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:discontinued).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit t("helpers.submit.product_sales_info.#{@product_sales_info.new_record? ? 'create' : 'update'}"),
+        class: 'btn btn-primary' %>
+  </div>
+<% end %>

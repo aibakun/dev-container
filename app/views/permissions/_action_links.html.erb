@@ -1,0 +1,12 @@
+<div class="btn-group" role="group">
+  <%= link_to t('permissions.actions.edit'),
+      edit_permission_path(permission),
+      class: 'btn btn-outline-primary btn-sm' %>
+  <%= link_to t('permissions.actions.delete'),
+      permission,
+      class: 'btn btn-outline-danger btn-sm',
+      data: {
+        turbo_method: :delete,
+        turbo_confirm: t('permissions.messages.confirm_delete')
+      } %>
+</div>

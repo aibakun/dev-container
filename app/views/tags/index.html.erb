@@ -1,0 +1,31 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><%= t('tags.index') %></h1>
+    <%= link_to t('tags.new_tag'), new_tag_path, class: 'btn btn-primary' %>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th><%= Tag.human_attribute_name(:name) %></th>
+            <th><%= t('tags.post_count') %></th>
+            <th><%= t('tags.actions') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tags.each do |tag| %>
+            <tr>
+              <td>
+                <%= link_to tag.name, tag_path(tag), class: 'text-decoration-none' %>
+              </td>
+              <td><span class="badge bg-secondary"><%= tag.posts.count %></span></td>
+              <td><%= render 'action_links', tag: tag %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

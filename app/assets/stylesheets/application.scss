@@ -1,0 +1,27 @@
+@import "bootstrap";
+
+.sidebar {
+  width: 250px;
+  min-height: 100%;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.sidebar-link {
+  @extend .nav-link;
+  @extend .rounded;
+  @extend .mb-1;
+
+  &.active {
+    @extend .text-white;
+    @extend .bg-primary;
+  }
+
+  &:not(.active) {
+    @extend .text-primary;
+  }
+}

@@ -1,0 +1,12 @@
+<div class="btn-group" role="group">
+  <% if event.user == current_user %>
+    <%= link_to t('common.show'), event, class: 'btn btn-outline-primary btn-sm' %>
+    <%= link_to t('common.edit'), edit_event_path(event), class: 'btn btn-outline-secondary btn-sm' %>
+    <%= link_to t('common.delete'), event,
+        class: 'btn btn-outline-danger btn-sm',
+        data: {
+          turbo_method: :delete,
+          turbo_confirm: t('events.delete_confirmation')
+        } %>
+  <% end %>
+</div>

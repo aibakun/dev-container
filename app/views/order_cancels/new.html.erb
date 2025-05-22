@@ -1,0 +1,83 @@
+<div class="container py-4">
+  <h1 class="mb-4"><%= t('.title') %></h1>
+
+  <%= form_with(model: [@order, @order_cancel], local: true) do |form| %>
+    <% if @order_cancel.errors.any? %>
+      <div class="alert alert-danger">
+        <h4 class="alert-heading"><%= t('errors.template.header', count: @order_cancel.errors.count) %></h4>
+        <ul class="mb-0">
+          <% @order_cancel.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="h5 mb-0"><%= t('.order_summary') %></h2>
+      </div>
+      <div class="card-body">
+        <p class="mb-3"><%= t('.order_date') %>: <%= l @order.created_at, format: :long %></p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th><%= OrderItem.human_attribute_name(:product_name) %></th>
+                <th><%= OrderItem.human_attribute_name(:price) %></th>
+                <th><%= OrderItem.human_attribute_name(:quantity) %></th>
+                <th><%= t('.subtotal') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @order.order_items.each do |item| %>
+                <tr>
+                  <td><%= item.product_sales_info.product.name %></td>
+                  <td><%= number_to_currency(item.product_sales_info.price, unit: '¥', precision: 0) %></td>
+                  <td><%= item.quantity %></td>
+                  <td><%= number_to_currency(item.quantity * item.product_sales_info.price, unit: '¥', precision: 0) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr class="table-active">
+                <th colspan="3"><%= t('.total') %></th>
+                <td>
+                  <%= number_to_currency(
+                    @order.order_items.sum { |item| item.quantity * item.product_sales_info.price },
+                    unit: '¥',
+                    precision: 0
+                  ) %>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="h5 mb-0"><%= t('.cancel_confirmation') %></h2>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <%= form.label :reason, class: 'form-label' %>
+          <%= form.text_area :reason, class: 'form-control', rows: 4 %>
+        </div>
+
+        <div>
+          <%= form.submit t('.submit'),
+              class: 'btn btn-danger',
+              data: {
+                confirm: t('.cancel_confirmation_message'),
+                turbo_confirm: t('.cancel_confirmation_message')
+              } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= link_to t('.back_to_order'), order_path(@order), class: 'btn btn-outline-secondary' %>
+</div>

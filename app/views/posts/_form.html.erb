@@ -1,0 +1,39 @@
+<%= form_with(model: [user, post], local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control' %>
+    <% if form.object.errors[:title].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:title).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :content, class: 'form-label' %>
+    <%= form.text_area :content, class: 'form-control', rows: 5 %>
+    <% if form.object.errors[:content].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:content).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :tag_ids, t('activerecord.attributes.tag.name'), class: 'form-label' %>
+    <div class="row g-3">
+      <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
+        <div class="col-auto">
+          <div class="form-check">
+            <%= b.check_box class: 'form-check-input' %>
+            <%= b.label class: 'form-check-label' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit t("helpers.submit.post.#{post.new_record? ? 'create' : 'update'}"), class: 'btn btn-primary' %>
+  </div>
+<% end %>

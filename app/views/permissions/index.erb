@@ -1,0 +1,31 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><%= t('.title') %></h1>
+    <%= link_to t('.new_permission'), new_permission_path, class: 'btn btn-primary' %>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th><%= Permission.human_attribute_name(:user) %></th>
+            <th><%= Permission.human_attribute_name(:controller) %></th>
+            <th><%= Permission.human_attribute_name(:action) %></th>
+            <th><%= t('permissions.actions.edit') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @permissions.each do |permission| %>
+            <tr>
+              <td><%= permission.user.name %></td>
+              <td><%= permission.controller %></td>
+              <td><%= permission.action %></td>
+              <td><%= render 'action_links', permission: permission %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

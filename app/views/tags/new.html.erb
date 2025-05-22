@@ -1,0 +1,13 @@
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="h4 mb-0"><%= t('tags.new_tag') %></h1>
+    </div>
+    <div class="card-body">
+      <%= render 'form', tag: @tag %>
+      <div class="mt-3">
+        <%= link_to t('tags.back_to_list'), tags_path, class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="h4 mb-0"><%= t('tags.show.title', name: @tag.name) %></h1>
+    </div>
+    <div class="card-body">
+      <h2 class="h5 mb-3"><%= t('tags.show.posts_list') %></h2>
+      <div class="list-group">
+        <% @posts.each do |post| %>
+          <%= link_to post.title, user_post_path(post.user, post), class: 'list-group-item list-group-item-action' %>
+        <% end %>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <%= link_to t('tags.back_to_list'), tags_path, class: 'btn btn-outline-secondary' %>
+        <nav>
+          <%= pagination_links(@page, @total_pages, :tag_path.to_s) %>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

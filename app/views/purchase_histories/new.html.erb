@@ -1,0 +1,9 @@
+<div class="container py-4">
+  <h1 class="mb-4"><%= t('purchase_histories.new_purchase_history') %></h1>
+
+  <%= render 'form', purchase_history: @purchase_history %>
+
+  <div class="mt-3">
+    <%= link_to t('purchase_histories.back_to_list'), purchase_histories_path, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>

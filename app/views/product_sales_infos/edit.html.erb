@@ -1,0 +1,15 @@
+<div class="container py-4">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="h4 mb-0"><%= t('product_sales_infos.edit_product_sales_info') %></h1>
+    </div>
+    <div class="card-body">
+      <%= render 'form', product_sales_info: @product_sales_info %>
+      <div class="mt-3">
+        <%= link_to t('product_sales_infos.back_to_list'),
+            product_sales_infos_path,
+            class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>

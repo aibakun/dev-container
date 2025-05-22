@@ -1,0 +1,354 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード確認
+        occupation: 職業
+      profile:
+        biography: プロフィール
+      post:
+        title: タイトル
+        content: 内容
+        created_at: 投稿日時
+      tag:
+        name: タグ名
+      permission:
+        user: ユーザー
+        user_id: ユーザー
+        controller: コントローラー
+        action: アクション
+      event:
+        title: タイトル
+        description: 説明
+        start_at: 開始日時
+        end_at: 終了日時
+        location: 開催場所
+        user: 作成者
+      product:
+        name: 商品名
+        category: カテゴリー
+        price: 価格
+      purchase_history:
+        name: 商品名
+        price: 価格
+        purchase_date: 購入日
+        user: 購入者
+      product_sales_info:
+        price: 価格
+        effective_from: 適用開始日
+        discontinued: 販売終了
+        product: 商品
+        product_id: 商品
+      order:
+        order_date: 注文日
+        user: 注文者
+      order_item:
+        product_name: 商品名
+        price: 価格
+        quantity: 数量
+      order_cancel:
+        reason: キャンセル理由
+      shipment:
+        tracking_number: 追跡番号
+        status: 配送状況
+    placeholders:
+      permission:
+        controller: "posts, users, tags などのコントローラー名"
+        action: "index, show, create などのアクション名"
+    enums:
+      user:
+        occupation:
+          student: 学生
+          employee: 会社員
+          self_employed: 自営業
+          unemployed: 無職
+          other: その他
+      product:
+        category:
+          electronics: 電化製品
+          clothing: 衣類
+          food: 食品
+          books: 書籍
+          other: その他
+    errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
+  errors:
+    template:
+      header:
+        one: "1件のエラーがあります"
+        other: "%{count}件のエラーがあります"
+    messages:
+      blank: "を入力してください"
+      required: "は必須項目です"
+      taken: "はすでに存在します"
+      invalid: "は不正な値です"
+      too_short: "%{count}文字以上で入力してください"
+      confirmation: "とパスワードの入力が一致しません"
+      invalid_controller: "指定されたコントローラーは存在しません"
+      invalid_action: "指定されたアクションは存在しません"
+      greater_than: "%{count}以上で入力してください"
+      not_a_number: は数値で入力してください
+      greater_than_or_equal_to: は%{count}以上の値にしてください
+      no_items_selected: 商品1つ以上選択してください
+  alerts:
+    unauthorized_action: "この操作を行う権限がありません。"
+  helpers:
+    submit:
+      user:
+        create: "登録"
+        update: "更新"
+      post:
+        create: "投稿"
+        update: "更新"
+      tag:
+        create: "登録"
+        update: "更新"
+      permission:
+        create: "付与"
+        update: "更新"
+      event:
+        create: "作成"
+        update: "更新"
+      purchase_history:
+        create: "登録する"
+        update: "更新する"
+      product_sales_info:
+        create: 登録
+        update: 更新
+      order:
+        create: 注文する
+      order_cancel:
+        create: キャンセルする
+    select:
+      prompt: "選択してください"
+  users:
+    actions: "操作"
+    create: "ユーザーを作成"
+    back_to_list: "ユーザーリストに戻る"
+    go_to_posts: "投稿一覧へ"
+    logout: "ログアウト"
+    logout_confirmation: "ログアウトしますか？"
+    edit: "編集"
+    delete: "削除"
+    new_user: "新規ユーザー"
+    edit_user: "ユーザー編集"
+    index: "ユーザーリスト"
+    delete_confirmation: "本当に削除しますか？"
+    error: "エラーが発生しました"
+  sessions:
+    new:
+      login: "ログイン"
+      invalid_email_or_password: "無効なメールアドレスまたはパスワードです"
+    create:
+      login: "ログインしました"
+    destroy:
+      logout: "ログアウトしました"
+  posts:
+    actions: "操作"
+    create: "投稿を作成"
+    back_to_list: "投稿一覧に戻る"
+    back_to_user: "ユーザー詳細に戻る"
+    edit: "編集"
+    delete: "削除"
+    new_post: "新規投稿"
+    edit_post: "投稿を編集"
+    index: "投稿一覧"
+    show: "投稿詳細"
+    delete_confirmation: "本当に削除しますか？"
+  tags:
+    back_to_list: "タグ一覧に戻る"
+    edit: "編集"
+    delete: "削除"
+    new_tag: "新規タグ"
+    edit_tag: "タグ編集"
+    index: "タグ一覧"
+    delete_confirmation: "本当に削除しますか？"
+    show:
+      title: "タグ: %{name}"
+      posts_list: "関連投稿一覧"
+  time:
+    formats:
+      long: "%Y/%m/%d %H:%M"
+      short: "%m/%d %H:%M"
+  events:
+    actions: "操作"
+    create: "イベントを作成"
+    back_to_list: "イベント一覧に戻る"
+    edit: "編集"
+    delete: "削除"
+    new_event: "新規イベント"
+    edit_event: "イベント編集"
+    index: "イベント一覧"
+    show: "イベント詳細"
+    delete_confirmation: "本当に削除しますか？"
+    messages:
+      created: "イベントを作成しました"
+      updated: "イベントを更新しました"
+      destroyed: "イベントを削除しました"
+    search:
+      submit: "検索"
+      select_user: "作成者を選択"
+      start_date: "開始日"
+      end_date: "終了日"
+    no_events_found: "イベントが見つかりませんでした"
+  common:
+    show: "詳細"
+    edit: "編集"
+    delete: "削除"
+  purchase_histories:
+    actions: "操作"
+    index: "購入履歴一覧"
+    new_purchase_history: "新規購入履歴"
+    edit_purchase_history: "購入履歴編集"
+    show: "購入履歴詳細"
+    back_to_list: "購入履歴一覧に戻る"
+    no_purchase_histories_found: "購入履歴が見つかりませんでした"
+    delete_confirmation: "本当に削除しますか？"
+    create:
+      messages:
+        created: "購入履歴を作成しました"
+    update:
+      messages:
+        updated: "購入履歴を更新しました"
+    destroy:
+      messages:
+        destroyed: "購入履歴を削除しました"
+    search:
+      submit: "検索"
+      price_range: 価格帯
+      secure_form: "安全なフォーム"
+      insecure_form: "安全でないフォーム"
+      select_user: "購入者を選択"
+      min_price_placeholder: "最小価格"
+      max_price_placeholder: "最大価格"
+  permissions:
+    go_to_permissions: "権限一覧へ"
+    index:
+      title: 権限一覧
+      new_permission: 新規権限作成
+    new:
+      title: 新規権限作成
+    edit:
+      title: 権限編集
+    actions:
+      edit: 編集
+      delete: 削除
+      back: 戻る
+    messages:
+      confirm_delete: この権限を削除してもよろしいですか？
+      created: 権限を作成しました
+      updated: 権限を更新しました
+      destroyed: 権限を削除しました
+    available_permissions: "利用可能なコントローラーとアクション例:"
+  products:
+    index: 商品一覧
+    back_to_list: 商品一覧に戻る
+    product_sales_info: "販売情報"
+    alerts:
+      not_available: "この商品は現在販売していません"
+  product_sales_infos:
+    actions: 操作
+    index: 商品販売情報一覧
+    new_product_sales_info: 新規販売情報
+    edit_product_sales_info: 販売情報編集
+    back_to_list: 販売情報一覧に戻る
+    messages:
+      created: 販売情報を登録しました
+      updated: 販売情報を更新しました
+    product_info: "商品名: %{name}"
+    status:
+      on_sale: 販売中
+      discontinued: 販売終了
+  orders:
+    index:
+      index: 注文一覧
+      new_order: 新規注文
+      total_amount: 合計金額
+      status: ステータス
+      actions: 操作
+      cancelled: キャンセル済
+      completed: 完了
+      cancel_order: キャンセルする
+      order_status: 注文状況
+      shipment_status: 配送状況
+    show:
+      title: 注文詳細
+      order_date: 注文日時
+      cancelled: キャンセル済
+      cancel_reason: キャンセル理由
+      subtotal: 小計
+      total: 合計
+      back_to_list: 一覧に戻る
+      cancel_order: この注文をキャンセルする
+      undo_cancel: キャンセルを取り消す
+      confirm_undo_cancel: キャンセルを取り消してもよろしいですか？
+      shipment_info: 配送情報
+      no_shipment_info: 配送情報はまだありません
+    new:
+      title: 新規注文
+      select_product: 商品を選択
+      back_to_order_list: 注文一覧に戻る
+      confirm_order: "注文を確定する"
+      processing: "処理中..."
+    messages:
+      created: 注文が完了しました
+    statistics:
+      total_orders: "総注文数"
+      active_orders: "有効な注文数"
+      cancelled_orders: "キャンセルされた注文数"
+      monthly_orders: "月別注文数"
+      monthly_chart:
+        label: "注文数"
+  order_cancels:
+    new:
+      title: 注文キャンセル
+      order_summary: 注文内容
+      order_date: 注文日時
+      subtotal: 小計
+      total: 合計金額
+      cancel_confirmation: キャンセルの確認
+      submit: キャンセルを確定する
+      cancel_confirmation_message: この注文をキャンセルしてもよろしいですか？
+      back_to_order: 注文詳細に戻る
+    destroy:
+      messages:
+        destroyed: キャンセルを取り消しました
+    messages:
+      created: 注文をキャンセルしました
+  carts:
+    shopping_cart: "ショッピングカート"
+    quantity: "数量"
+    subtotal: "小計"
+    total: "合計"
+    update: "更新"
+    proceed_to_checkout: "レジに進む"
+    empty: "カートは空です"
+    add_to_cart: "カートに追加"
+    item_added: "商品をカートに追加しました"
+    item_removed: "商品をカートから削除しました"
+    quantity_updated: "数量を更新しました"
+    checkout_completed: " 注文が完了しました"
+    checkout_failed: "注文処理に失敗しました"
+  inventory:
+    status:
+      out_of_stock: "在庫なし"
+      low_stock: "残り%{quantity}点"
+  shipment:
+    status:
+      preparing: 準備中
+      shipped: 発送済み
+      in_transit: 配送中
+      delivered: 配送完了
+      transition:
+          ship: "発送する"
+          begin_transit: "配送開始"
+          mark_as_delivered: "配送完了"

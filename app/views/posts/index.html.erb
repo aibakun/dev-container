@@ -1,0 +1,48 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3"><%= @user.name %>の<%= t('posts.index') %></h1>
+    <% if current_user == @user %>
+      <%= link_to t('posts.new_post'), new_user_post_path(@user), class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th><%= Post.human_attribute_name(:title) %></th>
+            <th><%= t('activerecord.attributes.post.created_at') %></th>
+            <th><%= t('tags.index') %></th>
+            <% if current_user == @user %>
+              <th><%= t('posts.actions') %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @posts.each do |post| %>
+            <tr>
+              <td><%= link_to post.title, user_post_path(@user, post), class: 'text-decoration-none' %></td>
+              <td><%= l(post.created_at, format: :short) %></td>
+              <td>
+                <% post.tags.each do |tag| %>
+                  <%= link_to tag.name, tag_path(tag), class: 'badge bg-secondary text-decoration-none me-1' %>
+                <% end %>
+              </td>
+              <% if current_user == @user %>
+                <td><%= render 'action_links', user: @user, post: post %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <%= link_to t('users.back_to_list'), users_path, class: 'btn btn-outline-secondary' %>
+    <nav>
+      <%= pagination_links(@page, @total_pages, "user_posts_path") %>
+    </nav>
+  </div>
+</div>

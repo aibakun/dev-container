@@ -1,0 +1,63 @@
+<%= form_with(model: permission, local: true, data: { turbo: false }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :user_id, class: 'form-label' %>
+    <%= form.collection_select :user_id,
+        @users,
+        :id,
+        :name,
+        { prompt: t('helpers.select.prompt') },
+        class: 'form-select' %>
+    <% if form.object.errors[:user_id].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:user_id).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :controller, class: 'form-label' %>
+    <%= form.text_field :controller,
+        class: 'form-control',
+        placeholder: t('activerecord.placeholders.permission.controller') %>
+    <% if form.object.errors[:controller].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:controller).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :action, class: 'form-label' %>
+    <%= form.text_field :action,
+        class: 'form-control',
+        placeholder: t('activerecord.placeholders.permission.action') %>
+    <% if form.object.errors[:action].any? %>
+      <div class="invalid-feedback d-block">
+        <%= form.object.errors.full_messages_for(:action).join(', ') %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit permission.new_record? ? t('helpers.submit.permission.create') : t('helpers.submit.permission.update'),
+        class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<div class="card mt-4">
+  <div class="card-header">
+    <h5 class="card-title mb-0"><%= t('permissions.available_permissions') %></h5>
+  </div>
+  <div class="card-body">
+    <div class="list-group">
+      <% @available_controllers.each do |controller| %>
+        <div class="list-group-item">
+          <h6 class="mb-1"><%= controller %></h6>
+          <p class="mb-0 text-muted">
+            <%= @available_actions[controller].join(', ') %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="col-12">
+    <h1 class="display-4 mb-4">ログファイルの分析</h1>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2 class="h4 mb-0">生成されるログの例</h2>
+      </div>
+      <div class="card-body">
+        <pre class="bg-light p-3 mb-0"><code>Started GET "/up" for 192.168.65.1 at 2024-05-03 04:27:16 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::HealthController#show as HTML
+ Rendering html template
+ Rendered html template (Duration: 0.0ms | Allocations: 8)
+Completed 200 OK in 9ms (Views: 5.6ms | ActiveRecord: 0.0ms | Allocations: 658)</code></pre>
+      </div>
+    </div>
+
+    <h2 class="h3 mb-4">ログの項目</h2>
+
+    <div class="accordion mb-4" id="railsLogs">
+      <!-- Request Start -->
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRequest">
+            1. リクエストの開始
+          </button>
+        </h3>
+        <div id="collapseRequest" class="accordion-collapse collapse show" data-bs-parent="#railsLogs">
+          <div class="accordion-body">
+            <p class="mb-2"><strong>形式:</strong></p>
+            <pre class="bg-light p-3"><code>Started HTTPメソッド "パス" for クライアントIP at タイムスタンプ</code></pre>
+            <p class="mb-2"><strong>例:</strong></p>
+            <ul class="list-unstyled mb-0">
+              <li><pre class="bg-light p-2"><code>Started GET "/path" for 192.168.1.1 at 2024-05-03 04:27:16 +0000</code></pre></li>
+              <li><pre class="bg-light p-2"><code>Started POST "/users" for 192.168.65.1 at 2024-05-07 12:52:40 +0000</code></pre></li>
+              <li><pre class="bg-light p-2"><code>Started PATCH "/users/1" for 192.168.65.1 at 2024-05-07 13:10:02 +0000</code></pre></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseConsole">
+            2. コンソールレンダリングの失敗
+          </button>
+        </h3>
+        <div id="collapseConsole" class="accordion-collapse collapse" data-bs-parent="#railsLogs">
+          <div class="accordion-body">
+            <p class="mb-2"><strong>形式:</strong></p>
+            <pre class="bg-light p-3"><code>Cannot render console from クライアントIP! Allowed networks: 許可されたネットワーク</code></pre>
+            <p class="mb-2"><strong>例:</strong></p>
+            <pre class="bg-light p-3 mb-0"><code>Cannot render console from 192.168.1.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controller Processing -->
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseController">
+            3. コントローラの処理
+          </button>
+        </h3>
+        <div id="collapseController" class="accordion-collapse collapse" data-bs-parent="#railsLogs">
+          <div class="accordion-body">
+            <p class="mb-2"><strong>形式:</strong></p>
+            <pre class="bg-light p-3"><code>Processing by コントローラ#アクション as フォーマット</code></pre>
+            <p class="mb-2"><strong>例:</strong></p>
+            <ul class="list-unstyled mb-0">
+              <li><pre class="bg-light p-2"><code>Processing by UsersController#new as HTML</code></pre></li>
+              <li><pre class="bg-light p-2"><code>Processing by UsersController#show as HTML</code></pre></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTemplate">
+            4. テンプレートのレンダリング
+          </button>
+        </h3>
+        <div id="collapseTemplate" class="accordion-collapse collapse" data-bs-parent="#railsLogs">
+          <div class="accordion-body">
+            <p class="mb-2"><strong>形式:</strong></p>
+            <pre class="bg-light p-3"><code>Rendering テンプレート</code></pre>
+            <pre class="bg-light p-3"><code>Rendered テンプレート (Duration: 時間ms | Allocations: メモリアロケーション数)</code></pre>
+            <p class="mb-2"><strong>例:</strong></p>
+            <ul class="list-unstyled mb-0">
+              <li><pre class="bg-light p-2"><code>Rendering users/new.html.erb</code></pre></li>
+              <li><pre class="bg-light p-2"><code>Rendered users/new.html.erb (Duration: 0.9ms | Allocations: 1455)</code></pre></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCompletion">
+            5. リクエストの完了
+          </button>
+        </h3>
+        <div id="collapseCompletion" class="accordion-collapse collapse" data-bs-parent="#railsLogs">
+          <div class="accordion-body">
+            <p class="mb-2"><strong>形式:</strong></p>
+            <pre class="bg-light p-3"><code>Completed ステータスコード ステータスメッセージ in 時間ms (Views: ビューの時間ms | ActiveRecord: ActiveRecordの時間ms | Allocations: メモリアロケーション数)</code></pre>
+            <p class="mb-2"><strong>例:</strong></p>
+            <ul class="list-unstyled mb-0">
+              <li><pre class="bg-light p-2"><code>Completed 200 OK in 9ms (Views: 5.6ms | ActiveRecord: 0.0ms | Allocations: 658)</code></pre></li>
+              <li><pre class="bg-light p-2"><code>Completed 500 Internal Server Error in 52ms (ActiveRecord: 8.3ms | Allocations: 21904)</code></pre></li>
+              <li><pre class="bg-light p-2"><code>Completed 404 Not Found in 38ms (ActiveRecord: 6.4ms | Allocations: 6625)</code></pre></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="h4 mb-0">一般的なエラーメッセージの対処法</h2>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <h5 class="mb-1">500 Internal Server Error</h5>
+            <p class="mb-0">サーバーエラーが発生しているため、サーバー側の設定を確認する。</p>
+          </li>
+          <li class="list-group-item">
+            <h5 class="mb-1">404 Not Found</h5>
+            <p class="mb-0">リクエストされたリソースが存在するか、URLが正しいかを確認する。</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

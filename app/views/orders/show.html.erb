@@ -1,0 +1,121 @@
+<div class="container py-4">
+  <h1 class="mb-4"><%= t('.title') %></h1>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <p class="mb-2"><%= t('.order_date') %>: <%= l @order.created_at, format: :long %></p>
+
+      <% if @order.order_cancel.present? %>
+        <div class="alert alert-danger">
+          <p class="mb-1"><strong><%= t('.cancelled') %></strong></p>
+          <p class="mb-0"><%= t('.cancel_reason') %>: <%= @order.order_cancel.reason %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-responsive mb-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= OrderItem.human_attribute_name(:product_name) %></th>
+          <th><%= OrderItem.human_attribute_name(:price) %></th>
+          <th><%= OrderItem.human_attribute_name(:quantity) %></th>
+          <th><%= t('.subtotal') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.order_items.each do |item| %>
+          <tr>
+            <td><%= item.product_sales_info.product.name %></td>
+            <td><%= number_to_currency(item.product_sales_info.price, unit: '¥', precision: 0) %></td>
+            <td><%= item.quantity %></td>
+            <td>
+              <%= number_to_currency(
+                item.quantity * item.product_sales_info.price,
+                unit: '¥',
+                precision: 0
+              ) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr class="table-active">
+          <th colspan="3"><%= t('.total') %></th>
+          <td>
+            <%= number_to_currency(
+              @order.order_items.sum { |item| item.quantity * item.product_sales_info.price },
+              unit: '¥',
+              precision: 0
+            ) %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <% if @order.order_cancel.present? %>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="mb-2"><strong><%= t('.cancelled') %></strong></p>
+        <p class="mb-3"><%= t('.cancel_reason') %>: <%= @order.order_cancel.reason %></p>
+        <%= button_to t('.undo_cancel'),
+                    order_order_cancel_path(@order, @order.order_cancel),
+                    method: :delete,
+                    class: 'btn btn-warning',
+                    data: { confirm: t('.confirm_undo_cancel') } %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="d-flex gap-2">
+    <%= link_to t('.back_to_list'), orders_path, class: 'btn btn-outline-secondary' %>
+    <% unless @order.order_cancel.present? %>
+      <%= link_to t('.cancel_order'), new_order_order_cancel_path(@order), class: 'btn btn-outline-danger' %>
+    <% end %>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header">
+    <h2 class="h5 mb-0"><%= t('.shipment_info') %></h2>
+  </div>
+  <div class="card-body">
+    <% if @order.shipment %>
+      <div class="row">
+        <div
+          class="col-md-6"
+          data-shipment
+          data-shipment-id="<%= @order.shipment.id %>"
+          data-current-status="<%= @order.shipment.status %>"
+          data-ship-text="<%= t('shipment.status.transition.ship') %>"
+          data-transit-text="<%= t('shipment.status.transition.begin_transit') %>"
+          data-delivered-text="<%= t('shipment.status.transition.mark_as_delivered') %>"
+        >
+          <p class="mb-2">
+            <strong><%= Shipment.human_attribute_name(:tracking_number) %>:</strong>
+            <%= @order.shipment.tracking_number %>
+          </p>
+          <p class="mb-2">
+            <strong><%= Shipment.human_attribute_name(:status) %>:</strong>
+            <span data-shipment-status>
+              <%= t("shipment.status.#{@order.shipment.status}") %>
+            </span>
+          </p>
+          <div data-shipment-buttons class="btn-group">
+            <% if (action = @order.shipment.next_action) %>
+              <%= button_tag t("shipment.status.transition.#{action}"),
+                            class: 'btn btn-primary',
+                            data: { action: action } %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <p class="mb-0"><%= t('.no_shipment_info') %></p>
+    <% end %>
+  </div>
+</div>
+
+<%= javascript_import_module_tag "modules/shipment_status_updater" %>

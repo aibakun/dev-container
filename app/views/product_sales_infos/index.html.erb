@@ -1,0 +1,47 @@
+<div class="container py-4">
+  <h1 class="h3 mb-4"><%= t('product_sales_infos.index') %></h1>
+
+  <% @products.each do |product| %>
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="h5 mb-0"><%= t('product_sales_infos.product_info', name: product.name) %></h2>
+        <%= link_to t('product_sales_infos.new_product_sales_info'),
+            new_product_product_sales_info_path(product),
+            class: 'btn btn-primary btn-sm' %>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th><%= ProductSalesInfo.human_attribute_name(:price) %></th>
+                <th><%= ProductSalesInfo.human_attribute_name(:effective_from) %></th>
+                <th><%= ProductSalesInfo.human_attribute_name(:discontinued) %></th>
+                <th><%= t('product_sales_infos.actions') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% product.product_sales_infos.order(effective_from: :desc).each do |sales_info| %>
+                <tr>
+                  <td><%= number_to_currency(sales_info.price, unit: '¥', precision: 0) %></td>
+                  <td><%= l sales_info.effective_from, format: :short %></td>
+                  <td>
+                    <span class="badge <%= sales_info.discontinued? ? 'bg-danger' : 'bg-success' %>">
+                      <%= sales_info.discontinued? ? t('product_sales_infos.status.discontinued') : t('product_sales_infos.status.on_sale') %>
+                    </span>
+                  </td>
+                  <td>
+                    <%= link_to t('common.edit'),
+                        edit_product_sales_info_path(sales_info),
+                        class: 'btn btn-outline-primary btn-sm' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

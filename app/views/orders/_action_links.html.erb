@@ -1,0 +1,6 @@
+<div class="btn-group" role="group">
+  <%= link_to t('common.show'), order_path(order), class: 'btn btn-outline-info btn-sm' %>
+  <% unless order.order_cancel.present? %>
+    <%= link_to t('orders.index.cancel_order'), new_order_order_cancel_path(order), class: 'btn btn-outline-danger btn-sm' %>
+  <% end %>
+</div>
