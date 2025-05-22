@@ -1,7 +1,10 @@
 {
-    "name": "Rails App",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "web",
-    "workspaceFolder": "/rails-application",
-    "forwardPorts": [3000]
+  "name": "Rails App",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": "/rails-application",
+  "forwardPorts": [3000],
+  "mounts": [
+      "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+      ]
 }
