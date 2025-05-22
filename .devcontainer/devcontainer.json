@@ -1,0 +1,7 @@
+{
+    "name": "Rails App",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "web",
+    "workspaceFolder": "/rails-application",
+    "forwardPorts": [3000]
+}
