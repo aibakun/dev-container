@@ -7,7 +7,7 @@ services:
       context: ..
       dockerfile: Dockerfile
     ports:
-      - "3001:3000"
+      - "3000:3000"
     volumes:
       - ..:/rails-application
     depends_on:
@@ -16,7 +16,7 @@ services:
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=postgres
       - DATABASE_HOST=db
-    command: sleep infinity
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
 
   db:
     image: postgres:13
