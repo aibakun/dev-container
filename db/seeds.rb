@@ -39,6 +39,71 @@ masashi.posts.create!(
   published_at: Time.current
 )
 
+s_lim = User.create!(
+  name: 'S Lim',
+  email: 's_lim@ga-tech.co.jp',
+  password: 's_lim@ga-tech.co.jp',
+  occupation: :employee
+)
+s_lim.create_profile!(biography: 'Biography for S Lim')
+s_lim.posts.create!(
+  title: 'S Lim',
+  content: 'Body for S Lim',
+  published_at: Time.current
+)
+
+k_saito = User.create!(
+  name: 'K Saito',
+  email: 'k_saito4@ga-tech.co.jp',
+  password: 'k_saito4@ga-tech.co.jp',
+  occupation: :employee
+)
+k_saito.create_profile!(biography: 'Biography for K Saito')
+k_saito.posts.create!(
+  title: 'K Saito',
+  content: 'Body for K Saito',
+  published_at: Time.current
+)
+
+r_akimoto = User.create!(
+  name: 'R Akimoto',
+  email: 'r_akimoto@ga-tech.co.jp',
+  password: 'r_akimoto@ga-tech.co.jp',
+  occupation: :employee
+)
+r_akimoto.create_profile!(biography: 'Biography for R Akimoto')
+r_akimoto.posts.create!(
+  title: 'R Akimoto',
+  content: 'Body for R Akimoto',
+  published_at: Time.current
+)
+
+y_igari = User.create!(
+  name: 'Y Igari',
+  email: 'y_igari@ga-tech.co.jp',
+  password: 'y_igari@ga-tech.co.jp',
+  occupation: :employee
+)
+y_igari.create_profile!(biography: 'Biography for Y Igari')
+y_igari.posts.create!(
+  title: 'Y Igari',
+  content: 'Body for Y Igari',
+  published_at: Time.current
+)
+
+y_kuro = User.create!(
+  name: 'Y Kuro',
+  email: 'y_kuro@ga-tech.co.jp',
+  password: 'y_kuro@ga-tech.co.jp',
+  occupation: :employee
+)
+y_kuro.create_profile!(biography: 'Biography for Y Kuro')
+y_kuro.posts.create!(
+  title: 'Y Kuro',
+  content: 'Body for Y Kuro',
+  published_at: Time.current
+)
+
 5000.times do |i|
   random_user = User.all.sample
   random_user.posts.create!(
